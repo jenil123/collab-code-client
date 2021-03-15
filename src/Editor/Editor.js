@@ -1,5 +1,6 @@
 import AceEditor from 'react-ace'
 import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
 import Beautify from 'ace-builds/src-noconflict/ext-beautify'
 import 'ace-builds/src-noconflict/ext-elastic_tabstops_lite'
 import 'ace-builds/src-noconflict/ext-error_marker'
@@ -32,7 +33,7 @@ const client = io.connect('http://localhost:8080') // import './App.css'
 
 const Editor = ({ location }) => {
   const room = queryString.parse(location.search)
-  console.log(room)
+  //console.log(room)
   const [state, setState] = useState({
     text: '',
     langauge: '54',
@@ -41,22 +42,64 @@ const Editor = ({ location }) => {
     output: '',
   })
   //const [text, setText] = useState('')
+  let text, langauge, theme, input, output
   useEffect(() => {
+    console.log('new user joined')
     client.emit('join', room.id)
+    const dayta = window.localStorage.getItem(`${room.id}`)
+    //console.log(dayta)
+    if (window.localStorage.getItem(`${room.id}`) === null) {
+    } else {
+      const obj = JSON.parse(window.localStorage.getItem(`${room.id}`))
+      const newState = {
+        text: obj.text || state.text,
+        langauge: obj.langauge || state.langauge,
+        theme: obj.theme || state.theme,
+        input: obj.input || state.input,
+        output: obj.output || state.output,
+      }
+      // console.log('new State', newState)
+      setState(newState)
+    }
+    // Axios.get(`http://localhost:8080/room/${room.id}`).then((response) => {
+    //   console.log('response', response.data)
+    //   text = response.data.text || ''
+    //   langauge = response.data.langauge || '54'
+    //   theme = response.data.theme || 'terminal'
+    //   input = response.data.input || ''
+    //   output = response.data.output || ''
+
     // const data = { room: room.id, data: state }
     // console.log('own-data', data)
     // client.emit('data', data)
   }, [])
   useEffect(() => {
-    console.log('here')
+    //console.log('here')
     client.on('data', (newState) => {
       console.log('data', newState)
       console.log('incoming-text', newState.data.data)
       if (newState.data.data.text !== ' ') setState(newState.data.data)
     })
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(state))
+    // const data = {
+    //   roomId: room.id,
+    //   text: state.text,
+    //   langauge: state.langauge,
+    //   theme: state.theme,
+    //   input: state.input,
+    //   output: state.output,
+    // }
+    // console.log('data', data)
+    // Axios.post(`http://localhost:8080/room/${room.id}`, data)
+    //   .then(() => {
+    //     console.log('data added successfully!!')
+    //   })
+    //   .catch((err) => {
+    //     throw err
+    //   })
   })
   const handleChange = (text) => {
-    console.log('text', text)
+    //console.log('text', text)
     //const editorInput = text
     const newState = {
       text: text,
@@ -66,12 +109,13 @@ const Editor = ({ location }) => {
       output: state.output,
     }
 
-    console.log('state', state)
+    //console.log('state', state)
     const data = { room: room.id, data: newState }
     //console.log('data', data)
     // console.log('own-data', data)
     client.emit('data', data)
     setState(newState)
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(newState))
   }
   const handleLanguageChange = (langauge) => {
     const newState = {
@@ -83,11 +127,12 @@ const Editor = ({ location }) => {
     }
     setState(newState)
 
-    console.log('state', state)
+    //console.log('state', state)
     const data = { room: room.id, data: newState }
     //console.log('data', data)
     // console.log('own-data', data)
     client.emit('data', data)
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(newState))
   }
   const handleThemeChange = (theme) => {
     const newState = {
@@ -99,11 +144,12 @@ const Editor = ({ location }) => {
     }
     setState(newState)
 
-    console.log('state', state)
+    //console.log('state', state)
     const data = { room: room.id, data: newState }
     //console.log('data', data)
     // console.log('own-data', data)
     client.emit('data', data)
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(newState))
   }
   const handleUserInput = (input) => {
     const newState = {
@@ -115,11 +161,12 @@ const Editor = ({ location }) => {
     }
     setState(newState)
 
-    console.log('state', state)
+    //console.log('state', state)
     const data = { room: room.id, data: newState }
     //console.log('data', data)
     // console.log('own-data', data)
     client.emit('data', data)
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(newState))
   }
   const handleCodeOutput = (output) => {
     const newState = {
@@ -131,15 +178,16 @@ const Editor = ({ location }) => {
     }
     setState(newState)
 
-    console.log('state', state)
+    //console.log('state', state)
     const data = { room: room.id, data: newState }
     //console.log('data', data)
     // console.log('own-data', data)
     client.emit('data', data)
+    window.localStorage.setItem(`${room.id}`, JSON.stringify(newState))
   }
 
   onsubmit = async (e) => {
-    console.log('state', state)
+    //console.log('state', state)
     e.preventDefault()
     let outputText = document.getElementById('output1')
     outputText.value = ''
