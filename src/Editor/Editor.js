@@ -325,9 +325,15 @@ const Editor = ({ location }) => {
           },
           {
             // commands is array of key bindings.
-            name: 'copyline', //name for the key binding.
-            bindKey: { win: 'Ctrl-C', mac: 'Command-C' }, //key combination used for the command.
-            exec: 'copyline', // name of the command to rebind
+            name: 'pasteline', //name for the key binding.
+            bindKey: { win: 'Ctrl-V', mac: 'Command-V' }, //key combination used for the command.
+            exec: 'pasteline', // name of the command to rebind
+          },
+          {
+            // commands is array of key bindings.
+            name: 'undo', //name for the key binding.
+            bindKey: { win: 'Ctrl-Z', mac: 'Command-Z' }, //key combination used for the command.
+            exec: 'undo', // name of the command to rebind
           },
           {
             // commands is array of key bindings.
