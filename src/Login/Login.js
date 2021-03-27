@@ -48,7 +48,7 @@ const Login = () => {
           </button>
         </Link>
         <p className='p'>
-          Share the uid present in the URL with friends for collaborating{' '}
+          Share the roomId present in the URL with friends for collaborating{' '}
         </p>
       </div>
     </div>
