@@ -297,10 +297,10 @@ const Editor = ({ location }) => {
           enableSnippets: true,
           showLineNumbers: true,
           tabSize: 2,
-          behavioursEnabled: true,
+          //behavioursEnabled: true,
 
-          displayIndentGuides: true, // boolean: true if the indent should be shown. See 'showInvisibles'
-          showInvisibles: true, // boolean -> displayIndentGuides: true if show the invisible tabs/spaces in indents
+          //displayIndentGuides: true, // boolean: true if the indent should be shown. See 'showInvisibles'
+          //showInvisibles: true, // boolean -> displayIndentGuides: true if show the invisible tabs/spaces in indents
         }}
         className='editor'
         highlightActiveLine={true}
