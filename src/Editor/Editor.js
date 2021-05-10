@@ -296,7 +296,7 @@ const Editor = ({ location }) => {
           enableLiveAutocompletion: true,
           enableSnippets: true,
           showLineNumbers: true,
-          tabSize: 2,
+          tabSize: 4,
           //behavioursEnabled: true,
 
           //displayIndentGuides: true, // boolean: true if the indent should be shown. See 'showInvisibles'
@@ -315,7 +315,7 @@ const Editor = ({ location }) => {
             // commands is array of key bindings.
             name: 'removeline', //name for the key binding.
             bindKey: { win: 'Ctrl-X', mac: 'Command-X' }, //key combination used for the command.
-            exec: 'removeline', // name of the command to rebind
+            exec: 'cutline', // name of the command to rebind
           },
           {
             // commands is array of key bindings.
